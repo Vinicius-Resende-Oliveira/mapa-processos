@@ -1,0 +1,66 @@
+<mat-card class="mt-5 text-bg-light">
+    <mat-card-header class="mb-5 text-center">
+        <mat-card-title>Case de avaliação</mat-card-title>
+        <mat-card-subtitle>Mapa processos</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="mb-5 text-bg-light">
+        <mat-card>
+            <mat-card-content>
+                <app-listProcesso *ngIf="processos.length > 0" [processo]="processos"></app-listProcesso>
+                <div *ngIf="processos.length == 0 && !loading" class="alert alert-dark">Não há processos cadastrados!</div>
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">ADICIONAR</button>
+    </mat-card-actions>
+</mat-card>
+
+<div class="my-container">
+    <ng-template #customLoadingTemplate></ng-template>
+  
+    <ngx-loading
+      [show]="loading"
+      [config]="{ backdropBorderRadius: '3px' }"
+      [template]="customLoadingTemplate"
+    ></ngx-loading>
+</div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar novo processo!</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="processoForm" (ngSubmit)="onSubmit()"> 
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="processo-name" class="col-form-label">Nome:</label>
+                    <input type="text" class="form-control" id="processo-name" formControlName="nome">
+                </div>
+                <div class="mb-3">
+                    <label for="processo-descricao" class="col-form-label">Descrição:</label>
+                    <textarea class="form-control" id="processo-descricao" formControlName="descricao"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="col-form-label">Processos:</label>
+                    <div class="form-check">
+                        <input checked class="form-check-input" type="radio" name="processo-radio" id="flexRadioDefault" (click)="selectProcesso(null)">
+                        <label class="form-check-label" for="flexRadioDefault">
+                          Nenhum processo
+                        </label>
+                    </div>
+                    <app-formCheckProcessos  *ngFor="let processo of processos; let i = index;" [processo]="processo" (selectedProcessoForm)="selectProcesso($event)"></app-formCheckProcessos>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-success" value="Salvar">
+            </div>
+        </form>
+      </div>
+    </div>
+</div>

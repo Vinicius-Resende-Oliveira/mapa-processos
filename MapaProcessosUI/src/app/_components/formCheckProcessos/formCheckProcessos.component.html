@@ -1,0 +1,11 @@
+<div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" [value]="processo.id" name="processo-radio" id="flexRadioDefault{{processo.id}}" (click)="selectProcesso(processo.id)">
+    <label class="form-check-label" for="flexRadioDefault{{processo.id}}">
+      {{processo.nome}}
+    </label>
+  </div>
+  <div *ngIf="processo.subsProcessosNavigation.length > 0" class="ps-3">
+    <app-formCheckProcessos  *ngFor="let subprocesso of processo.subsProcessosNavigation; let i = index;" [processo]="subprocesso" (selectedProcessoForm)="selectProcesso($event)"></app-formCheckProcessos>
+  </div>
+</div>
