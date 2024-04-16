@@ -5,7 +5,7 @@ using MP.Application.Interfaces;
 
 namespace MP.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProcessoController : ControllerBase
     {
